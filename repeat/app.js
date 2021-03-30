@@ -1,37 +1,64 @@
-const posts = [
-    {title: 'Post One', body: 'this is post one '},
-    {title: 'Post Two', body: 'this is post two '}
-];
- 
-function createPost(post){
-    return new Promise(function(resolve, reject){
-        setTimeout(function(){ 
-            posts.push(post); 
+//IFFE function invokes automatically
 
-            const error = false;
-            
-            if(!error){
-               resolve(); 
-            } else {
-               reject('Error: Something went wrong');
-            }
-            
-        }, 2000);       
-    });    
-}
+/*
 
-function getPosts(){
-   setTimeout(function() {
-     let output = ''
-     posts.forEach(function(post){
-        output +=`<li>${post.title}</li>`;
-     });
-     document.body.innerHTML = output;
-   }, 1000); 
-} 
+//Basic structure
 
-createPost({title: 'Post three', body: 'this is post three'})
-.then(getPosts) 
-.catch(function(err){
-     console.log(err);
- });
+(function(){
+   //Declare private variables an functions
+
+   return {
+      // Declare public variables and functions
+   } 
+})();
+
+*/
+
+/*
+//STANDARD MODULE PATTERN
+const UICtrl = (function() {
+   let text = 'Hello world';
+
+   const changeText = function() {
+      const element = document.querySelector('h1');
+      element.textContent = text;
+   }
+
+   return {
+      callChangeText : function() {
+         changeText();
+         //console.log(text);
+      }
+   }
+})();
+
+UICtrl.callChangeText();
+
+console.log(UICtrl.text);
+*/
+
+//REVEALING MODULE PATERN
+const ItemCtrl = (function() {
+   let data = [];
+
+   function add(item) {
+      data.push(item);
+      console.log('Item Added...');
+   }
+
+   function get(id) {
+      return data.find(item => {
+         return item.id === id;
+      });
+   }
+
+   return {
+      add: add,
+      get: get
+   }
+})();
+
+ItemCtrl.add({id:1, name:'Martin'});
+ItemCtrl.add({id:2, name:'Tom'});
+console.log(ItemCtrl.get(2));
+   
